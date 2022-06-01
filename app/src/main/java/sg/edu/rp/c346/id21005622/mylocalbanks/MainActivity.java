@@ -2,7 +2,10 @@ package sg.edu.rp.c346.id21005622.mylocalbanks;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -17,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     TextView tvOCBC;
     TextView tvUOB;
     String wordClicked = "";
+    boolean flagDBS = false;
+    boolean flagOCBC = false;
+    boolean flagUOB = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(tvDBS);
         registerForContextMenu(tvOCBC);
         registerForContextMenu(tvUOB);
+
     }
 
     @Override
@@ -38,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here.
@@ -71,9 +79,12 @@ public class MainActivity extends AppCompatActivity {
         }
         menu.add(0, 0, 0, "Website");
         menu.add(0, 1, 1, "Contact the bank");
+        menu.add(0, 2, 2, "Toggle Favourite");
     }
 
     public boolean onContextItemSelected(MenuItem item) {
+
+
         if (wordClicked.equalsIgnoreCase("DBS")) {
             if (item.getItemId() == 0) { //check whether the selected menu item ID is 0
                 Intent intentWeb = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.dbs.com.sg"));
@@ -84,6 +95,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentCall = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: " + "18001111111"));
                 startActivity(intentCall);
                 return true;  //menu item successfully handled
+            } else if (item.getItemId() == 2) {
+                if (flagDBS == false){
+                    tvDBS.setTextColor(Color.parseColor("#FFFF0000"));
+                    flagDBS = true;
+                }
+                else if (flagDBS == true){
+                    tvDBS.setTextColor(Color.parseColor("#808080"));
+                    flagDBS = false;
+                }
             }
         }
         else if (wordClicked.equalsIgnoreCase("OCBC")) {
@@ -96,6 +116,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentCall = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: " + "18003633333"));
                 startActivity(intentCall);
                 return true;  //menu item successfully handled
+            } else if (item.getItemId() == 2) {
+                if (flagOCBC == false){
+                    tvOCBC.setTextColor(Color.parseColor("#FFFF0000"));
+                    flagOCBC = true;
+                }
+                else if (flagOCBC == true){
+                    tvOCBC.setTextColor(Color.parseColor("#808080"));
+                    flagOCBC = false;
+                }
             }
         }
         if (wordClicked.equalsIgnoreCase("UOB")) {
@@ -108,6 +137,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentCall = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: " + "18002222121"));
                 startActivity(intentCall);
                 return true;  //menu item successfully handled
+            } else if (item.getItemId() == 2) {
+                if (flagUOB == false){
+                    tvUOB.setTextColor(Color.parseColor("#FFFF0000"));
+                    flagUOB = true;
+                }
+                else if (flagUOB == true){
+                    tvUOB.setTextColor(Color.parseColor("#808080"));
+                    flagUOB = false;
+                }
             }
         }
         return false;
